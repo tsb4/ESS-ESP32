@@ -1,29 +1,44 @@
-//Carrega a biblioteca do sensor ultrassonico
 #include <Ultrasonic.h>
  
-//Define os pinos para o trigger e echo
-#define pino_trigger 3
-#define pino_echo 4
+
+#define pino_trigger 4
+#define pino_echo 5
+
+int state = 0;
  
-//Inicializa o sensor nos pinos definidos acima
+
 Ultrasonic ultrasonic(pino_trigger, pino_echo);
  
 void setup()
 {
   Serial.begin(9600);
+  
 }
  
 void loop()
 {
-  //Le as informacoes do sensor, em cm e pol
-  float cmMsec, inMsec;
-  long microsec = ultrasonic.timing();
-  cmMsec = ultrasonic.convert(microsec, Ultrasonic::CM);
-  inMsec = ultrasonic.convert(microsec, Ultrasonic::IN);
-  //Exibe informacoes no serial monitor
-  Serial.print("Distancia em cm: ");
-  Serial.print(cmMsec);
-  Serial.print(" - Distancia em polegadas: ");
-  Serial.println(inMsec);
-  delay(1000);
+  if(state==0){
+    //espera pelo comando para fazer a autenticação do lixo
+    //Ao fazer, state=1
+    state=1;
+  } 
+  if(state==1){
+    float dist = 15.0;
+    while (dist>10.0){
+      long microsec = ultrasonic.timing();
+      dist = ultrasonic.convert(microsec, Ultrasonic::CM);
+      Serial.print("Dist: ");
+      Serial.println(dist);
+      delay(100);
+    }
+    Serial.println("Foi");
+    state=2;
+  }
+  if(state==2){
+    //Tenta mandar de volta a autenticação
+    state=0;
+  }
+
+
+  
 }
