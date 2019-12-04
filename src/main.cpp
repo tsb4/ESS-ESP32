@@ -9,8 +9,8 @@
 #define pino_trigger 4
 #define pino_echo 5
 
-const char* ssid = "yourNetworkName";
-const char* password = "yourNetworkPassword";
+const char* ssid = "heim1";
+const char* password = "acgabensb";
 
 int state = 0;
  
@@ -34,7 +34,7 @@ void setup()
  
 void loop()
 {
-  if(state==0){
+  /* if(state==0){
     //espera pelo comando para fazer a autenticação do lixo
     //Ao fazer, state=1
     if ((WiFi.status() == WL_CONNECTED)) { //Check the current connection status
@@ -63,8 +63,8 @@ void loop()
       http.end(); //Free the resources
     }
     
-  } 
-  if(state==1){
+  }*/ 
+  if(state==0){
     float dist = 15.0;
     while (dist>10.0){
       long microsec = ultrasonic.timing();
@@ -74,15 +74,15 @@ void loop()
       delay(100);
     }
     Serial.println("Foi");
-    state=2;
+    state=1;
   }
-  if(state==2){
+  if(state==1){
     //Tenta mandar de volta a autenticação
     if(WiFi.status()== WL_CONNECTED){   //Check WiFi connection status
 
       HTTPClient http;   
     
-      http.begin("http://jsonplaceholder.typicode.com/posts");  //Specify destination for HTTP request
+      http.begin("https://cin.ufpe.br/~tsb4/temp/");  //Specify destination for HTTP request
       http.addHeader("Content-Type", "text/plain");             //Specify content-type header
     
       int httpResponseCode = http.POST("POSTING from ESP32");   //Send the actual POST request
@@ -99,7 +99,7 @@ void loop()
     
         Serial.print("Error on sending POST: ");
         Serial.println(httpResponseCode);
-        state = 2;
+        state = 1;
     
       }
     
