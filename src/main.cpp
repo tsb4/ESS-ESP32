@@ -9,8 +9,8 @@
 #define pino_trigger 4
 #define pino_echo 5
 
-const char* ssid = "heim1";
-const char* password = "acgabensb";
+const char* ssid = "Moto G (5) 3330";
+const char* password = "viniciusserra";
 
 int state = 0;
  
@@ -82,7 +82,8 @@ void loop()
 
       HTTPClient http;   
     
-      http.begin("https://cin.ufpe.br/~tsb4/temp/");  //Specify destination for HTTP request
+      http.begin("http://192.168.43.119:3000/confirmarQuentinha?time_stamp=350"); 
+      //http.begin("https://cin.ufpe.br/~tsb4/temp/");  //Specify destination for HTTP request
       http.addHeader("Content-Type", "text/plain");             //Specify content-type header
     
       int httpResponseCode = http.POST("POSTING from ESP32");   //Send the actual POST request
