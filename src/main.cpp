@@ -3,14 +3,23 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
 #include<string.h>
+#include<time.h>
+
+time_t tt;
  
  
 
 #define pino_trigger 4
 #define pino_echo 5
 
-const char* ssid = "Moto G (5) 3330";
-const char* password = "viniciusserra";
+#define led_red 19
+#define led_green 23
+
+//const char* ssid = "Moto G (5) 3330";
+//const char* password = "viniciusserra";
+
+const char* ssid = "AndroidAP442B";
+const char* password = "uddx0298";
 
 int state = 0;
  
@@ -19,7 +28,18 @@ Ultrasonic ultrasonic(pino_trigger, pino_echo);
  
 void setup()
 {
+  
+  pinMode(led_red, OUTPUT);
+  pinMode(led_green, OUTPUT);
   Serial.begin(9600);
+  delay(5000);
+  Serial.println("oi");
+  tt = time(NULL);
+  Serial.println((int32_t)(tt));
+  delay(5000);
+  Serial.println("oi");
+  tt = time(NULL);
+  Serial.println((int32_t)(tt));
   delay(4000);
   WiFi.begin(ssid, password);
  
@@ -29,7 +49,10 @@ void setup()
   }
  
   Serial.println("Connected to the WiFi network");
-  
+  digitalWrite(led_green, HIGH);
+  digitalWrite(led_red, HIGH);
+  delay(5000);
+  digitalWrite(led_green, LOW); 
 }
  
 void loop()
@@ -65,6 +88,8 @@ void loop()
     
   }*/ 
   if(state==0){
+    digitalWrite(led_red, HIGH);
+    digitalWrite(led_green, LOW);
     float dist = 15.0;
     while (dist>10.0){
       long microsec = ultrasonic.timing();
