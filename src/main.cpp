@@ -4,6 +4,7 @@
 #include <HTTPClient.h>
 #include<string.h>
 #include<time.h>
+#include<ctime>
 
 time_t tt;
  
@@ -22,6 +23,8 @@ const char* ssid = "AndroidAP442B";
 const char* password = "uddx0298";
 
 int state = 0;
+
+
  
 
 Ultrasonic ultrasonic(pino_trigger, pino_echo);
@@ -29,17 +32,11 @@ Ultrasonic ultrasonic(pino_trigger, pino_echo);
 void setup()
 {
   
+  
   pinMode(led_red, OUTPUT);
   pinMode(led_green, OUTPUT);
   Serial.begin(9600);
-  delay(5000);
-  Serial.println("oi");
-  tt = time(NULL);
-  Serial.println((int32_t)(tt));
-  delay(5000);
-  Serial.println("oi");
-  tt = time(NULL);
-  Serial.println((int32_t)(tt));
+  
   delay(4000);
   WiFi.begin(ssid, password);
  
@@ -107,7 +104,7 @@ void loop()
 
       HTTPClient http;   
     
-      http.begin("http://192.168.43.119:3000/confirmarQuentinha?time_stamp=350"); 
+      http.begin("http://192.168.43.119:3000/confirmarQuentinha"); 
       //http.begin("https://cin.ufpe.br/~tsb4/temp/");  //Specify destination for HTTP request
       http.addHeader("Content-Type", "text/plain");             //Specify content-type header
     
