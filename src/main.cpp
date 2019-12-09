@@ -14,6 +14,8 @@
 #define led_red 19
 #define led_green 23
 
+#define MIN_DISTANCE 10.0
+
 //const char* ssid = "Moto G (5) 3330";
 //const char* password = "viniciusserra";
 
@@ -57,7 +59,7 @@ void loop()
     digitalWrite(led_red, HIGH);
     digitalWrite(led_green, LOW);
     float dist = 15.0;
-    while (dist>10.0){
+    while (dist>MIN_DISTANCE){
       long microsec = ultrasonic.timing();
       dist = ultrasonic.convert(microsec, Ultrasonic::CM);
       Serial.print("Dist: ");
